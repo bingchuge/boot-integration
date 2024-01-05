@@ -1,2 +1,1 @@
-# boot-integration
-springboot集成，方便项目使用
+方便springboot集成中间件和平时使用
