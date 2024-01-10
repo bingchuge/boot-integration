@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="sa-rbac-demo" />
+        <module name="mytest" />
         <module name="redis-demo" />
       </profile>
     </annotationProcessing>
