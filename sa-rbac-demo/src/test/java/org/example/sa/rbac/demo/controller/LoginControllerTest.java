@@ -47,15 +47,11 @@ public class LoginControllerTest {
     @Test
     public void encrypt() {
         // 使用方法
-        String plain_password = "123123123112312312311231231231123123123112312312311231231231";
+        String plain_password = "123456";
         String salt = BCrypt.gensalt(10);
         String pw_hash = BCrypt.hashpw(plain_password, salt);
-        String pw_hash2 = BCrypt.hashpw(plain_password, salt);
+        System.out.println(salt);
         System.out.println(pw_hash);
-        // 使用checkpw方法检查被加密的字符串是否与原始字符串匹配：
-        boolean checkpw = BCrypt.checkpw(salt, pw_hash);
-
-        // gensalt方法提供了可选参数 (log_rounds) 来定义加盐多少，也决定了加密的复杂度:
     }
 
 }

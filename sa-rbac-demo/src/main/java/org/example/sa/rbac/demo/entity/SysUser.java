@@ -54,9 +54,9 @@ public class SysUser {
     private String phoneNumber;
 
     /**
-     * 用户性别（0男 1女 2未知）
+     * 用户性别（1男 2女 3未知）
      */
-    private Boolean sex;
+    private Integer sex;
 
     /**
      * 头像路径
@@ -74,9 +74,9 @@ public class SysUser {
     private String salt;
 
     /**
-     * 帐号状态（0正常 1停用）
+     * 账号状态（1正常 0停用）
      */
-    private Boolean status;
+    private Integer status;
 
     /**
      * 最后登录时间
@@ -118,5 +118,5 @@ public class SysUser {
     /**
      * 删除标志（0代表存在 1代表删除）
      */
-    private Boolean delFlag;
+    private Integer delFlag;
 }
