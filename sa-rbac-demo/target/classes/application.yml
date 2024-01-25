@@ -1,6 +1,8 @@
 server:
   # 端口
-  port: 8081
+  port: 8066
+  servlet:
+    context-path: /coqas
 
 spring:
   datasource:
@@ -25,7 +27,7 @@ logging:
 mybatis-plus:
   mapper-locations: classpath:mappers/*.xml
   #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.xkcoding.orm.mybatis.plus.entity
+  typeAliasesPackage: org.example.sa.rbac.demo.entity
   global-config:
     # 数据库相关配置
     db-config:
@@ -45,13 +47,14 @@ mybatis-plus:
     refresh: true
   # 原生配置
   configuration:
-    map-underscore-to-camel-case: true
+    map-underscore-to-camel-case: false
     cache-enabled: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 ############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 sa-token:
   # token 名称（同时也是 cookie 名称）
-  token-name: satoken
+  token-name: token
   # token 有效期（单位：秒） 默认30天，-1 代表永久有效
   timeout: 2592000
   # token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结

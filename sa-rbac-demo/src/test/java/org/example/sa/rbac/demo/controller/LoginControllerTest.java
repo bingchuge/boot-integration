@@ -6,7 +6,6 @@ import cn.hutool.crypto.digest.BCrypt;
 import org.example.sa.rbac.demo.SaRbacDemoApplication;
 import org.example.sa.rbac.demo.entity.SysUser;
 import org.example.sa.rbac.demo.service.SysUserService;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

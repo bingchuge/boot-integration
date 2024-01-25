@@ -17,7 +17,7 @@ import java.util.Collections;
 public class Gennerator {
 
     public static void main(String[] args) {
-        String tableNames = "sys_user";
+        String tableNames = "sys_user_role";
 
         // 数据库链接
         String url = "jdbc:mysql://127.0.0.1:3306/sarbac?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8";
@@ -60,6 +60,7 @@ public class Gennerator {
                             .enableRestStyle()
                             .entityBuilder()
                             .disableSerialVersionUID()
+                            .enableTableFieldAnnotation()
                             .addTableFills(
                                     new Column("create_time", FieldFill.INSERT),
                                     new Column("update_time", FieldFill.UPDATE)

@@ -1,56 +1,44 @@
 package org.example.sa.rbac.demo.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * <p>
- * 部门表
+ * 用户角色表
  * </p>
  *
  * @author bingchu
- * @since 2024-01-09
+ * @since 2024-01-18
  */
 @Getter
 @Setter
-@TableName("sys_dept")
-public class SysDept {
+@TableName("sys_user_role")
+public class SysUserRole {
 
     /**
-     * 部门id
+     * id
      */
-    @TableId("dept_id")
-    private String deptId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
     /**
-     * 父部门id
+     * 用户id
      */
-    @TableField("parent_id")
-    private Long parentId;
+    @TableField("user_id")
+    private Long userId;
 
     /**
-     * 部门名称
+     * 角色id
      */
-    @TableField("dept_name")
-    private String deptName;
-
-    /**
-     * 显示顺序
-     */
-    @TableField("order_num")
-    private Integer orderNum;
-
-    /**
-     * 部门状态（1正常 0停用）
-     */
-    @TableField("status")
-    private Boolean status;
+    @TableField("role_id")
+    private Long roleId;
 
     /**
      * 创建者

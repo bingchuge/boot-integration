@@ -2,6 +2,10 @@ package org.example.sa.rbac.demo.service;
 
 import org.example.sa.rbac.demo.entity.SysMenuRole;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.example.sa.rbac.demo.entity.dto.SaveRoleMenuDto;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -13,4 +17,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SysMenuRoleService extends IService<SysMenuRole> {
 
+    List<String> getMenuIdsByRoleIds(Set<Long> roleIds);
+
+    void save(SaveRoleMenuDto roleMenuDto);
+
+    void removeByRoleId(Long roleId);
 }
