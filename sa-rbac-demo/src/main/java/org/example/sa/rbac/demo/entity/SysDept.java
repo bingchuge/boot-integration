@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,7 +28,7 @@ public class SysDept {
      * 部门id
      */
     @TableId("dept_id")
-    private String deptId;
+    private Long deptId;
 
     /**
      * 父部门id
@@ -50,7 +52,7 @@ public class SysDept {
      * 部门状态（1正常 0停用）
      */
     @TableField("status")
-    private Boolean status;
+    private Integer status;
 
     /**
      * 创建者
@@ -62,6 +64,7 @@ public class SysDept {
      * 创建时间
      */
     @TableField(value = "create_time", fill = FieldFill.INSERT)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
     /**
@@ -74,6 +77,7 @@ public class SysDept {
      * 更新时间
      */
     @TableField(value = "update_time", fill = FieldFill.UPDATE)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 
     /**
