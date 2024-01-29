@@ -53,4 +53,10 @@ public class SysDeptController {
         return SaResult.data(dept);
     }
 
+    @GetMapping(value = "/{deptId}")
+    public SaResult getById(@PathVariable Long deptId) {
+        SysDept dept = sysDeptService.getById(deptId);
+        return SaResult.data(dept);
+    }
+
 }
