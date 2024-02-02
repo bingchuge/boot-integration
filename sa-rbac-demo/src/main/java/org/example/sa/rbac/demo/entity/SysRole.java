@@ -44,7 +44,7 @@ public class SysRole {
      * 角色状态（1正常 0停用）
      */
     @TableField("status")
-    private Boolean status;
+    private Integer status;
 
     /**
      * 创建者

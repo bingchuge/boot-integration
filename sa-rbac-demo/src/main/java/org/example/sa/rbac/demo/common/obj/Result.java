@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.example.sa.rbac.demo.common.util;
+package org.example.sa.rbac.demo.common.obj;
 
 
 import lombok.*;

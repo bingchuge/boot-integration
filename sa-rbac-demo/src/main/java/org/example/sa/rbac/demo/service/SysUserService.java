@@ -1,7 +1,12 @@
 package org.example.sa.rbac.demo.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.example.sa.rbac.demo.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.example.sa.rbac.demo.entity.dto.UserPageDto;
+import org.example.sa.rbac.demo.entity.dto.UserSaveDto;
+import org.example.sa.rbac.demo.entity.vo.UserInfoVo;
+import org.example.sa.rbac.demo.entity.vo.UserListVo;
 
 /**
  * <p>
@@ -20,4 +25,10 @@ public interface SysUserService extends IService<SysUser> {
      */
 
     SysUser getByUsername(String username);
+
+    Page<UserListVo> getPage(UserPageDto pageParam);
+
+    void saveUser(UserSaveDto userSaveDto);
+
+    UserInfoVo getUserInfo(Long userId);
 }

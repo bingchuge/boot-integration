@@ -17,7 +17,7 @@ import java.util.Collections;
 public class Gennerator {
 
     public static void main(String[] args) {
-        String tableNames = "sys_user_role";
+        String tableNames = "sys_user_dept";
 
         // 数据库链接
         String url = "jdbc:mysql://127.0.0.1:3306/sarbac?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8";
@@ -47,10 +47,10 @@ public class Gennerator {
                             .entity("entity")
                             .service("service")
                             .serviceImpl("service.impl")
-                            .mapper("mapper")
-                            .xml("mapper")
+                            .mapper("mappers")
+                            .xml("mappers")
                             .controller("controller")
-                            .pathInfo(Collections.singletonMap(OutputFile.xml, System.getProperty("user.dir") + "/sa-rbac-demo/src/main/resources/mapper")); // 设置mapperXml生成路径
+                            .pathInfo(Collections.singletonMap(OutputFile.xml, System.getProperty("user.dir") + "/sa-rbac-demo/src/main/resources/mappers")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
                     builder.addInclude(tableNames) // 设置需要生成的表名

@@ -1,9 +1,6 @@
 package org.example.sa.rbac.demo.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 
 import java.time.LocalDateTime;
 
@@ -35,6 +32,9 @@ public class SysDept {
      */
     @TableField("parent_id")
     private Long parentId;
+
+    @TableField("ancestors")
+    private String ancestors;
 
     /**
      * 部门名称
@@ -84,5 +84,6 @@ public class SysDept {
      * 删除标志（0代表存在 1代表删除）
      */
     @TableField("del_flag")
+    @TableLogic
     private Boolean delFlag;
 }

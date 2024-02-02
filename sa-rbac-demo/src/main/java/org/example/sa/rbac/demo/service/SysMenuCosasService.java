@@ -2,6 +2,7 @@ package org.example.sa.rbac.demo.service;
 
 import org.example.sa.rbac.demo.entity.SysMenuCosas;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.example.sa.rbac.demo.entity.dto.MenuSaveDto;
 
 import java.util.List;
 
@@ -17,4 +18,7 @@ public interface SysMenuCosasService extends IService<SysMenuCosas> {
 
     public List<SysMenuCosas> listMenu();
 
+    void add(MenuSaveDto menuSaveDto);
+
+    void update(MenuSaveDto menuSaveDto);
 }

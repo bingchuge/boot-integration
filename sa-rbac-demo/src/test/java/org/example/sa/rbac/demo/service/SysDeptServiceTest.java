@@ -2,6 +2,7 @@ package org.example.sa.rbac.demo.service;
 
 import org.example.sa.rbac.demo.SaRbacDemoApplication;
 import org.example.sa.rbac.demo.entity.SysDept;
+import org.example.sa.rbac.demo.entity.bo.TreeNode;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,4 +25,25 @@ class SysDeptServiceTest {
         System.out.println(list);
     }
 
+    @Test
+    void getDeptList() {
+    }
+
+    @Test
+    void excludeChild() {
+    }
+
+    @Test
+    void saveDept() {
+    }
+
+    @Test
+    void removeByIdAndChildren() {
+    }
+
+    @Test
+    void getDeptTree() {
+        List<TreeNode> deptTree = service.getDeptTree();
+        System.out.println(deptTree);
+    }
 }

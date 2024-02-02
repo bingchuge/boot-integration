@@ -1,25 +1,19 @@
-package org.example.sa.rbac.demo.entity;
+package org.example.sa.rbac.demo.entity.vo;
 
-import com.baomidou.mybatisplus.annotation.*;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+@Data
+public class UserInfoVo {
 
-/**
- * <p>
- * 用户表
- * </p>
- *
- * @author bingchu
- * @since 2024-01-09
- */
-@Getter
-@Setter
-@TableName("sys_user")
-public class SysUser {
+    private Long deptId;
+    private String deptName;
 
     /**
      * 用户ID
@@ -45,18 +39,6 @@ public class SysUser {
     @TableField("name")
     private String name;
 
-    /**
-     * 用户邮箱
-     */
-    @TableField("email")
-    private String email;
-
-    /**
-     * 手机号码
-     */
-    @TableField("phone_number")
-    @JsonIgnore
-    private String phoneNumber;
 
     /**
      * 用户性别（1男 2女 3未知）
@@ -70,19 +52,7 @@ public class SysUser {
     @TableField("avatar")
     private String avatar;
 
-    /**
-     * 密码
-     */
-    @TableField("password")
-    @JsonIgnore
-    private String password;
 
-    /**
-     * 盐加密
-     */
-    @TableField("salt")
-    @JsonIgnore
-    private String salt;
 
     /**
      * 帐号状态（1正常 0停用）
@@ -96,12 +66,6 @@ public class SysUser {
     @TableField("login_date")
     private LocalDateTime loginDate;
 
-    /**
-     * 密码最后更新时间
-     */
-    @TableField("pwd_update_date")
-    @JsonIgnore
-    private LocalDateTime pwdUpdateDate;
 
     /**
      * 创建者
@@ -133,10 +97,4 @@ public class SysUser {
     @TableField("remark")
     private String remark;
 
-    /**
-     * 删除标志（0代表存在 1代表删除）
-     */
-    @TableField("del_flag")
-    @TableLogic
-    private Byte delFlag;
 }

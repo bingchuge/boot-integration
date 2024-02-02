@@ -2,6 +2,7 @@ package org.example.sa.rbac.demo.controller;
 
 import cn.dev33.satoken.util.SaResult;
 import org.example.sa.rbac.demo.entity.SysDept;
+import org.example.sa.rbac.demo.entity.bo.TreeNode;
 import org.example.sa.rbac.demo.service.SysDeptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,15 +24,27 @@ public class SysDeptController {
     @Autowired
     private SysDeptService sysDeptService;
 
-    @GetMapping("/page")
-    public SaResult page() {
-        List<SysDept> list = sysDeptService.page();
+    @GetMapping("/list")
+    public SaResult list() {
+        List<SysDept> list = sysDeptService.getDeptList();
         return SaResult.data(list);
+    }
+
+    @GetMapping("tree")
+    public SaResult tree() {
+        List<TreeNode> deptTree = sysDeptService.getDeptTree();
+        return SaResult.data(deptTree);
+    }
+
+    @GetMapping("excludeChild/{deptId}")
+    public SaResult excludeChild(@PathVariable Long deptId) {
+        List<SysDept> depts = sysDeptService.excludeChild(deptId);
+        return SaResult.data(depts);
     }
 
     @PostMapping("save")
     public SaResult save(@RequestBody SysDept sysDept) {
-        sysDeptService.save(sysDept);
+        sysDeptService.saveDept(sysDept);
         return SaResult.ok();
     }
 
@@ -43,7 +56,7 @@ public class SysDeptController {
 
     @PostMapping("delete")
     public SaResult delete(@RequestBody SysDept sysDept) {
-        sysDeptService.removeById(sysDept.getDeptId());
+        sysDeptService.removeByIdAndChildren(sysDept.getDeptId());
         return SaResult.ok();
     }
 
