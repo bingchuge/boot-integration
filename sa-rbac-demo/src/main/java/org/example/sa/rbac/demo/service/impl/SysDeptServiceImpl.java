@@ -1,5 +1,6 @@
 package org.example.sa.rbac.demo.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.example.sa.rbac.demo.entity.SysDept;
@@ -121,6 +122,9 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     @Override
     public List<SysDept> listByRoleId(Long roleId) {
         List<Long> depts = sysDeptRoleService.getDepsIdsByRoleId(roleId);
+        if (CollUtil.isEmpty(depts)) {
+            return new ArrayList<>();
+        }
         List<SysDept> sysDepts = this.listByDeptIds(depts);
         return sysDepts;
     }
@@ -130,6 +134,11 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
         LambdaQueryWrapper<SysDept> wrapper = Wrappers.lambdaQuery();
         wrapper.in(SysDept::getDeptId, depts);
         return this.list(wrapper);
+    }
+
+    @Override
+    public void listWithAuthority() {
+        Long userId = 100L;
     }
 
     public static List<TreeNode> buildTree(List<SysDept> depts) {

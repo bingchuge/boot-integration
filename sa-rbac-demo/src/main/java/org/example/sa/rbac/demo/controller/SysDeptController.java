@@ -78,4 +78,10 @@ public class SysDeptController {
         return SaResult.data(sysDepts);
     }
 
+    @GetMapping("listWithAuthority")
+    public SaResult listWithAuthority() {
+        sysDeptService.listWithAuthority();
+        return SaResult.ok();
+    }
+
 }

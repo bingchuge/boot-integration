@@ -37,4 +37,7 @@ public interface SysDeptService extends IService<SysDept> {
     List<SysDept> listByRoleId(Long roleId);
 
     List<SysDept> listByDeptIds(List<Long> menuIds);
+
+    void listWithAuthority();
+
 }
