@@ -1,8 +1,11 @@
 package org.example.sa.rbac.demo.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.example.sa.rbac.demo.entity.SysDept;
 import org.example.sa.rbac.demo.entity.bo.TreeNode;
-import org.example.sa.rbac.demo.mapper.SysDeptMapper;
+import org.example.sa.rbac.demo.mappers.SysDeptMapper;
+import org.example.sa.rbac.demo.service.SysDeptRoleService;
 import org.example.sa.rbac.demo.service.SysDeptService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.example.sa.rbac.demo.service.SysUserDeptService;
@@ -29,6 +32,9 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 
     @Autowired
     private SysUserDeptService sysUserDeptService;
+
+    @Autowired
+    private SysDeptRoleService sysDeptRoleService;
 
     @Override
     public List<SysDept> getDeptList() {
@@ -110,6 +116,20 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
             return this.getById(deptId);
         }
         return null;
+    }
+
+    @Override
+    public List<SysDept> listByRoleId(Long roleId) {
+        List<Long> depts = sysDeptRoleService.getDepsIdsByRoleId(roleId);
+        List<SysDept> sysDepts = this.listByDeptIds(depts);
+        return sysDepts;
+    }
+
+    @Override
+    public List<SysDept> listByDeptIds(List<Long> depts) {
+        LambdaQueryWrapper<SysDept> wrapper = Wrappers.lambdaQuery();
+        wrapper.in(SysDept::getDeptId, depts);
+        return this.list(wrapper);
     }
 
     public static List<TreeNode> buildTree(List<SysDept> depts) {

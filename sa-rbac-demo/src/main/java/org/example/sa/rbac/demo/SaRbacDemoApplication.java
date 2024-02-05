@@ -6,7 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan(basePackages = {"org.example.sa.rbac.demo.mapper"})
+@MapperScan(basePackages = {"org.example.sa.rbac.demo.mappers"})
 public class SaRbacDemoApplication {
 
     public static void main(String[] args) {

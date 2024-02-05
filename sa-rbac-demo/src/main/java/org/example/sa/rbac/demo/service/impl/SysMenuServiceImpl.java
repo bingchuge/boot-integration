@@ -1,7 +1,7 @@
 package org.example.sa.rbac.demo.service.impl;
 
 import org.example.sa.rbac.demo.entity.SysMenu;
-import org.example.sa.rbac.demo.mapper.SysMenuMapper;
+import org.example.sa.rbac.demo.mappers.SysMenuMapper;
 import org.example.sa.rbac.demo.service.SysMenuRoleService;
 import org.example.sa.rbac.demo.service.SysMenuService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -34,7 +34,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     public List<SysMenu> listByUserId(int userId) {
         Set<Long> roleIds = sysRoleService.getRoleIdsByUserId(userId);
         // 获取拥有菜单id
-        List<String> menuIds = sysMenuRoleService.getMenuIdsByRoleIds(roleIds);
+        List<Long> menuIds = sysMenuRoleService.getMenuIdsByRoleIds(roleIds);
         // 获取菜单集合
         List<SysMenu> sysMenus = this.listByIds(menuIds);
         return sysMenus;

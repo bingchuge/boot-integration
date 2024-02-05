@@ -1,22 +1,26 @@
 package org.example.sa.rbac.demo.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.example.sa.rbac.demo.entity.SysMenuCosas;
 import org.example.sa.rbac.demo.entity.SysRole;
+import org.example.sa.rbac.demo.entity.dto.AuthDeptDto;
+import org.example.sa.rbac.demo.entity.dto.AuthUserDto;
 import org.example.sa.rbac.demo.entity.dto.RolePageDto;
-import org.example.sa.rbac.demo.entity.dto.RoleSaveDto;
 import org.example.sa.rbac.demo.entity.dto.SaveRoleMenuDto;
-import org.example.sa.rbac.demo.mapper.SysRoleMapper;
-import org.example.sa.rbac.demo.service.SysMenuRoleService;
-import org.example.sa.rbac.demo.service.SysRoleService;
+import org.example.sa.rbac.demo.entity.vo.RoleMenuDetail;
+import org.example.sa.rbac.demo.mappers.SysRoleMapper;
+import org.example.sa.rbac.demo.service.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.example.sa.rbac.demo.service.SysUserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -36,15 +40,26 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Autowired
     private SysMenuRoleService sysMenuRoleService;
 
+    @Autowired
+    private SysMenuCosasService sysMenuCosasService;
+    @Autowired
+    private SysDeptRoleService sysDeptRoleService;
+
     @Override
     public Set<Long> getRoleIdsByUserId(int userId) {
         return sysUserRoleService.getRoleIdsByUserId(userId);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void saveRoleMenu(SaveRoleMenuDto roleMenuDto) {
         SysRole sysRole = BeanUtil.toBean(roleMenuDto, SysRole.class);
-        this.save(sysRole);
+        if (sysRole.getRoleId() != null) {
+            this.updateById(sysRole);
+        } else {
+            this.save(sysRole);
+        }
+        roleMenuDto.setRoleId(sysRole.getRoleId());
         // 保存角色菜单关系
         sysMenuRoleService.save(roleMenuDto);
     }
@@ -56,9 +71,36 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
                 .eq(rolePageDto.getStatus() != null, SysRole::getStatus, rolePageDto.getStatus())
                 .orderByAsc(SysRole::getRoleSort);
         Page<SysRole> pageParam = new Page<>(rolePageDto.getPageNum(), rolePageDto.getPageSize());
-        Page<SysRole> page = this.page(pageParam);
+        Page<SysRole> page = this.page(pageParam, wrapper);
         return page;
     }
 
+    @Override
+    public RoleMenuDetail getDetail(Long roleId) {
+        SysRole sysRole = this.getById(roleId);
+        RoleMenuDetail roleMenuDetail = BeanUtil.toBean(sysRole, RoleMenuDetail.class);
+        List<Long> menuIds = sysMenuRoleService.getMenuIdsByRoleId(roleId);
+        List<SysMenuCosas> sysMenuCosas = ListUtil.empty();
+        if (CollUtil.isNotEmpty(menuIds)) {
+            sysMenuCosas = sysMenuCosasService.listByIds(menuIds);
+        }
+        roleMenuDetail.setMenuList(sysMenuCosas);
+        return roleMenuDetail;
+    }
+
+    @Override
+    public void authUsers(AuthUserDto authUserDto) {
+        sysUserRoleService.authUsers(authUserDto);
+    }
+
+    @Override
+    public void unAuthUsers(AuthUserDto authUserDto) {
+        sysUserRoleService.unAuthUsers(authUserDto);
+    }
+
+    @Override
+    public void authDepts(AuthDeptDto authDeptDto) {
+        sysDeptRoleService.authDepts(authDeptDto);
+    }
 
 }

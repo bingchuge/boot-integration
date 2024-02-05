@@ -1,6 +1,7 @@
 package org.example.sa.rbac.demo.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.BCrypt;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -8,12 +9,15 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.example.sa.rbac.demo.entity.SysDept;
 import org.example.sa.rbac.demo.entity.SysUser;
+import org.example.sa.rbac.demo.entity.dto.UserPageByRoleDto;
 import org.example.sa.rbac.demo.entity.dto.UserPageDto;
+import org.example.sa.rbac.demo.entity.dto.UserPageUnauthorizedDto;
 import org.example.sa.rbac.demo.entity.dto.UserSaveDto;
 import org.example.sa.rbac.demo.entity.vo.UserInfoVo;
 import org.example.sa.rbac.demo.entity.vo.UserListVo;
-import org.example.sa.rbac.demo.mapper.SysUserMapper;
+import org.example.sa.rbac.demo.mappers.SysUserMapper;
 import org.example.sa.rbac.demo.service.SysDeptService;
+import org.example.sa.rbac.demo.service.SysUserRoleService;
 import org.example.sa.rbac.demo.service.SysUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +42,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private SysDeptService sysDeptService;
     @Autowired
     private SysUserMapper sysUserMapper;
+    @Autowired
+    private SysUserRoleService sysUserRoleService;
 
     @Override
     public SysUser getByUsername(String username) {
@@ -91,6 +97,31 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         UserInfoVo userInfoVo = BeanUtil.toBean(sysUser, UserInfoVo.class);
         BeanUtil.copyProperties(sysDept, userInfoVo);
         return userInfoVo;
+    }
+
+    @Override
+    public Page<UserListVo> getPageByRoleId(UserPageByRoleDto userPageByRoleDto) {
+        List<Long> userIds = sysUserRoleService.getUserIdsByRoleId(userPageByRoleDto.getRoleId());
+        if (CollUtil.isEmpty(userIds)) {
+            return new Page<>(userPageByRoleDto.getPageNum(), userPageByRoleDto.getPageSize());
+        }
+
+        UserPageDto userPageDto = BeanUtil.toBean(userPageByRoleDto, UserPageDto.class);
+        Page<UserListVo> userListVos = sysUserMapper.selectUserPage(userPageDto, userIds, new Page<SysUser>(userPageDto.getPageNum(), userPageDto.getPageSize()));
+        return userListVos;
+    }
+
+    @Override
+    public Page<UserListVo> getUnauthorizedUserPage(UserPageUnauthorizedDto userPageUnauthorizedDto) {
+        LambdaQueryWrapper<SysUser> wrapper = Wrappers.lambdaQuery();
+        List<Long> userIds = new ArrayList<>();
+        // TODO 如果有选择部门
+        if (CollUtil.isEmpty(userPageUnauthorizedDto.getDeptIds())) {
+
+        }
+        List<Long> notInUserIds = sysUserRoleService.getUserIdsByRoleId(userPageUnauthorizedDto.getRoleId());
+        Page<UserListVo> userListVos = sysUserMapper.selectUnauthorizedUserPage(userPageUnauthorizedDto, notInUserIds, new Page<SysUser>(userPageUnauthorizedDto.getPageNum(), userPageUnauthorizedDto.getPageSize()));
+        return userListVos;
     }
 
     private void updateUser(UserSaveDto userSaveDto) {

@@ -1,4 +1,4 @@
-package org.example.sa.rbac.demo.mapper;
+package org.example.sa.rbac.demo.mappers;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

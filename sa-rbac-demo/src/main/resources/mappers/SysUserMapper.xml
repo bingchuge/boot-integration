@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.example.sa.rbac.demo.mapper.SysUserMapper">
+<mapper namespace="org.example.sa.rbac.demo.mappers.SysUserMapper">
 
     <select id="selectUserPage" resultType="org.example.sa.rbac.demo.entity.vo.UserListVo">
         select su.user_id AS userId,
@@ -41,6 +41,47 @@
             <if test="userIds != null and userIds.size() > 0">
                 and su.user_id in
                 <foreach collection="userIds" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="selectUnauthorizedUserPage" resultType="org.example.sa.rbac.demo.entity.vo.UserListVo">
+        select su.user_id AS userId,
+        su.user_name AS userName,
+        su.user_type AS userType,
+        su.name AS name,
+        su.email AS email,
+        su.phone_number AS phoneNumber,
+        su.sex AS sex,
+        su.avatar AS avatar,
+        su.password AS password,
+        su.salt AS salt,
+        su.status AS status,
+        su.login_date AS loginDate,
+        su.pwd_update_date AS pwdUpdateDate,
+        su.create_by AS createBy,
+        su.create_time AS createTime,
+        su.update_by AS updateBy,
+        su.update_time AS updateTime,
+        su.remark AS remark,
+        su.del_flag AS delFlag,
+        sd.dept_id AS deptId,
+        sd.dept_name AS deptName
+        from sys_user su
+        left join sys_user_dept sud on su.user_id = sud.user_id
+        left join sys_dept sd on sud.dept_id = sd.dept_id
+        <where>
+            su.del_flag = 0
+            <if test="userPageUnauthorizedDto.userName != null and userPageUnauthorizedDto.userName != ''">
+                and su.user_name like concat('%', #{userPageDto.userName}, '%')
+            </if>
+            <if test="userPageUnauthorizedDto.name != null and userPageUnauthorizedDto.name != ''">
+                and su.name like concat('%', #{userPageDto.name}, '%')
+            </if>
+            <if test="notInUserIds != null and notInUserIds.size() > 0">
+                and su.user_id not in
+                <foreach collection="notInUserIds" item="item" open="(" close=")" separator=",">
                     #{item}
                 </foreach>
             </if>

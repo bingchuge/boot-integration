@@ -1,4 +1,4 @@
-package org.example.sa.rbac.demo.mapper;
+package org.example.sa.rbac.demo.mappers;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
@@ -6,6 +6,7 @@ import org.example.sa.rbac.demo.entity.SysUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.example.sa.rbac.demo.entity.dto.UserPageDto;
+import org.example.sa.rbac.demo.entity.dto.UserPageUnauthorizedDto;
 import org.example.sa.rbac.demo.entity.vo.UserListVo;
 
 import java.util.List;
@@ -22,4 +23,6 @@ import java.util.List;
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
     Page<UserListVo> selectUserPage(@Param("userPageDto") UserPageDto userPageDto, @Param("userIds") List<Long> userIds, Page<SysUser> sysUserPage);
+
+    Page<UserListVo> selectUnauthorizedUserPage(@Param("userPageUnauthorizedDto") UserPageUnauthorizedDto userPageUnauthorizedDto, @Param("notInUserIds") List<Long> notInUserIds, @Param("sysUserPage") Page<SysUser> sysUserPage);
 }

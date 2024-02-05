@@ -1,4 +1,4 @@
-package org.example.sa.rbac.demo.mapper;
+package org.example.sa.rbac.demo.mappers;
 
 import org.example.sa.rbac.demo.entity.SysMenuCosas;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

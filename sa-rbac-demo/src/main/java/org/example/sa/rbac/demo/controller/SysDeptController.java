@@ -72,4 +72,10 @@ public class SysDeptController {
         return SaResult.data(dept);
     }
 
+    @GetMapping("listByRoleId")
+    public SaResult listByRoleId(Long roleId) {
+        List<SysDept> sysDepts = sysDeptService.listByRoleId(roleId);
+        return SaResult.data(sysDepts);
+    }
+
 }

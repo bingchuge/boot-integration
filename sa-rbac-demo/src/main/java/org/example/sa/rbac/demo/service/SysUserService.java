@@ -3,7 +3,9 @@ package org.example.sa.rbac.demo.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.example.sa.rbac.demo.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.example.sa.rbac.demo.entity.dto.UserPageByRoleDto;
 import org.example.sa.rbac.demo.entity.dto.UserPageDto;
+import org.example.sa.rbac.demo.entity.dto.UserPageUnauthorizedDto;
 import org.example.sa.rbac.demo.entity.dto.UserSaveDto;
 import org.example.sa.rbac.demo.entity.vo.UserInfoVo;
 import org.example.sa.rbac.demo.entity.vo.UserListVo;
@@ -31,4 +33,8 @@ public interface SysUserService extends IService<SysUser> {
     void saveUser(UserSaveDto userSaveDto);
 
     UserInfoVo getUserInfo(Long userId);
+
+    Page<UserListVo> getPageByRoleId(UserPageByRoleDto userPageByRoleDto);
+
+    Page<UserListVo> getUnauthorizedUserPage(UserPageUnauthorizedDto userPageUnauthorizedDto);
 }

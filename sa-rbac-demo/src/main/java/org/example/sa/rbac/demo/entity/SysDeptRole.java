@@ -1,26 +1,23 @@
 package org.example.sa.rbac.demo.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * <p>
- * 菜单权限表
+ * 部门权限表
  * </p>
  *
  * @author bingchu
- * @since 2024-01-09
+ * @since 2024-02-05
  */
 @Getter
 @Setter
-@TableName("sys_menu_role")
-public class SysMenuRole {
+@TableName("sys_dept_role")
+public class SysDeptRole {
 
     /**
      * id
@@ -29,10 +26,10 @@ public class SysMenuRole {
     private Long id;
 
     /**
-     * 菜单id
+     * 部门id
      */
-    @TableField("menu_id")
-    private Long menuId;
+    @TableField("dept_id")
+    private Long deptId;
 
     /**
      * 角色id
@@ -68,5 +65,6 @@ public class SysMenuRole {
      * 删除标志（0代表存在 1代表删除）
      */
     @TableField("del_flag")
+    @TableLogic
     private Boolean delFlag;
 }

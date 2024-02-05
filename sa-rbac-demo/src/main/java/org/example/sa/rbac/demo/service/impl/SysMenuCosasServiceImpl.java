@@ -4,7 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.example.sa.rbac.demo.entity.SysMenuCosas;
 import org.example.sa.rbac.demo.entity.dto.MenuSaveDto;
-import org.example.sa.rbac.demo.mapper.SysMenuCosasMapper;
+import org.example.sa.rbac.demo.mappers.SysMenuCosasMapper;
 import org.example.sa.rbac.demo.service.SysMenuCosasService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;

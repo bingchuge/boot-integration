@@ -33,4 +33,8 @@ public interface SysDeptService extends IService<SysDept> {
     void updateUserDept(String deptId, Long userId);
 
     SysDept getDeptByUserId(Long userId);
+
+    List<SysDept> listByRoleId(Long roleId);
+
+    List<SysDept> listByDeptIds(List<Long> menuIds);
 }

@@ -17,9 +17,11 @@ import java.util.Set;
  */
 public interface SysMenuRoleService extends IService<SysMenuRole> {
 
-    List<String> getMenuIdsByRoleIds(Set<Long> roleIds);
+    List<Long> getMenuIdsByRoleIds(Set<Long> roleIds);
 
     void save(SaveRoleMenuDto roleMenuDto);
 
     void removeByRoleId(Long roleId);
+
+    List<Long> getMenuIdsByRoleId(Long roleId);
 }

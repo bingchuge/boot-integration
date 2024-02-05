@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.example.sa.rbac.demo.entity.SysMenuRole;
 import org.example.sa.rbac.demo.entity.dto.SaveRoleMenuDto;
-import org.example.sa.rbac.demo.mapper.SysMenuRoleMapper;
+import org.example.sa.rbac.demo.mappers.SysMenuRoleMapper;
 import org.example.sa.rbac.demo.service.SysMenuRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +28,11 @@ public class SysMenuRoleServiceImpl extends ServiceImpl<SysMenuRoleMapper, SysMe
     @Autowired
     private SysMenuRoleMapper sysMenuRoleMapper;
     @Override
-    public List<String> getMenuIdsByRoleIds(Set<Long> roleIds) {
+    public List<Long> getMenuIdsByRoleIds(Set<Long> roleIds) {
         LambdaQueryWrapper<SysMenuRole> wrapper = Wrappers.lambdaQuery();
         wrapper.in(SysMenuRole::getRoleId, roleIds);
         List<SysMenuRole> list = this.list(wrapper);
-        List<String> menuIds = list.stream().map(SysMenuRole::getMenuId).collect(Collectors.toList());
+        List<Long> menuIds = list.stream().map(SysMenuRole::getMenuId).collect(Collectors.toList());
         return menuIds;
     }
 
@@ -45,7 +45,7 @@ public class SysMenuRoleServiceImpl extends ServiceImpl<SysMenuRoleMapper, SysMe
             // 转换成 sysmenurole实体类
             SysMenuRole sysMenuRole = new SysMenuRole();
             sysMenuRole.setRoleId(roleMenuDto.getRoleId());
-            sysMenuRole.setMenuId(menuId);
+            sysMenuRole.setMenuId(Long.valueOf(menuId));
             records.add(sysMenuRole);
         }
         // 先删除
@@ -58,6 +58,15 @@ public class SysMenuRoleServiceImpl extends ServiceImpl<SysMenuRoleMapper, SysMe
         LambdaQueryWrapper<SysMenuRole> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(SysMenuRole::getRoleId, roleId);
         this.remove(wrapper);
+    }
+
+    @Override
+    public List<Long> getMenuIdsByRoleId(Long roleId) {
+        LambdaQueryWrapper<SysMenuRole> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(SysMenuRole::getRoleId, roleId);
+        List<SysMenuRole> list = this.list(wrapper);
+        List<Long> menuIds = list.stream().map(SysMenuRole::getMenuId).collect(Collectors.toList());
+        return menuIds;
     }
 
     private List<String> splitTags(String tagsStr) {

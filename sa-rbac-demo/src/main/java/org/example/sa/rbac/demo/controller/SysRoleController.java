@@ -2,9 +2,8 @@ package org.example.sa.rbac.demo.controller;
 
 import cn.dev33.satoken.util.SaResult;
 import org.example.sa.rbac.demo.entity.SysRole;
-import org.example.sa.rbac.demo.entity.dto.RolePageDto;
-import org.example.sa.rbac.demo.entity.dto.RoleSaveDto;
-import org.example.sa.rbac.demo.entity.dto.SaveRoleMenuDto;
+import org.example.sa.rbac.demo.entity.dto.*;
+import org.example.sa.rbac.demo.entity.vo.RoleMenuDetail;
 import org.example.sa.rbac.demo.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -49,17 +48,17 @@ public class SysRoleController {
      * @param roleId
      * @return
      */
-    @GetMapping("get")
-    public SaResult get(@RequestParam("roleId") Long roleId) {
-        SysRole sysRole = sysRoleService.getById(roleId);
-        return SaResult.data(sysRole);
+    @GetMapping("roleMenu")
+    public SaResult roleMenu(@RequestParam("roleId") Long roleId) {
+        RoleMenuDetail roleMenu = sysRoleService.getDetail(roleId);
+        return SaResult.data(roleMenu);
     }
 
     /**
      * @Description: 保存角色
      */
-    @PostMapping("saveRoleMenu")
-    public SaResult saveRoleMenu(@RequestBody @Valid SaveRoleMenuDto roleMenuDto) {
+    @PostMapping("save")
+    public SaResult save(@RequestBody @Valid SaveRoleMenuDto roleMenuDto) {
         sysRoleService.saveRoleMenu(roleMenuDto);
         return SaResult.ok();
     }
@@ -70,9 +69,27 @@ public class SysRoleController {
      * @param roleId 角色ID
      * @return 返回操作结果
      */
-    @PostMapping("{roleId}")
+    @DeleteMapping("{roleId}")
     public SaResult delete(@PathVariable("roleId") Long roleId) {
         sysRoleService.removeById(roleId);
+        return SaResult.ok();
+    }
+
+    @PostMapping("authUsers")
+    public SaResult authUsers(@RequestBody @Valid AuthUserDto authUserDto) {
+        sysRoleService.authUsers(authUserDto);
+        return SaResult.ok();
+    }
+
+    @PostMapping("unAuthUsers")
+    public SaResult unAuthUsers(@RequestBody @Valid AuthUserDto authUserDto) {
+        sysRoleService.unAuthUsers(authUserDto);
+        return SaResult.ok();
+    }
+
+    @PostMapping("authDepts")
+    public SaResult authDepts(@RequestBody AuthDeptDto authDeptDto) {
+        sysRoleService.authDepts(authDeptDto);
         return SaResult.ok();
     }
 

@@ -2,7 +2,9 @@ package org.example.sa.rbac.demo.service;
 
 import org.example.sa.rbac.demo.entity.SysUserRole;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.example.sa.rbac.demo.entity.dto.AuthUserDto;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -17,4 +19,9 @@ public interface SysUserRoleService extends IService<SysUserRole> {
 
     Set<Long> getRoleIdsByUserId(int userId);
 
+    List<Long> getUserIdsByRoleId(Long roleId);
+
+    void authUsers(AuthUserDto authUserDto);
+
+    void unAuthUsers(AuthUserDto authUserDto);
 }

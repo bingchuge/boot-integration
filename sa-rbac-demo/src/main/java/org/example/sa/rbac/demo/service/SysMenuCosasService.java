@@ -21,4 +21,5 @@ public interface SysMenuCosasService extends IService<SysMenuCosas> {
     void add(MenuSaveDto menuSaveDto);
 
     void update(MenuSaveDto menuSaveDto);
+
 }

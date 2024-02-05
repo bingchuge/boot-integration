@@ -2,6 +2,7 @@ package org.example.sa.rbac.demo.entity.vo;
 
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.example.sa.rbac.demo.entity.SysUser;
@@ -76,6 +77,7 @@ public class UserListVo {
      * 创建时间
      */
     @TableField(value = "create_time", fill = FieldFill.INSERT)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
     /**
