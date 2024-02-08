@@ -17,7 +17,7 @@ import java.util.Set;
  */
 public interface SysUserRoleService extends IService<SysUserRole> {
 
-    Set<Long> getRoleIdsByUserId(int userId);
+    Set<Long> getRoleIdsByUserId(Long userId);
 
     List<Long> getUserIdsByRoleId(Long roleId);
 

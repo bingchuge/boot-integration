@@ -14,6 +14,6 @@ public class UserPageDto extends PageParam {
     private String userName;
     private String name;
     private Integer status;
-    private Integer deptId;
+    private Long deptId;
 
 }

@@ -16,7 +16,6 @@
             update_time AS updateTime,
             del_flag AS delFlag
         from sys_dept
-        where find_in_set(ancestors, #{deptId})
-           or dept_id = #{deptId}
+        where find_in_set(#{deptId}, ancestors) > 0
     </select>
 </mapper>

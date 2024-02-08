@@ -92,7 +92,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     }
 
     @Override
-    public List<Long> getUserIdsByDeptId(Integer deptId) {
+    public List<Long> getUserIdsByDeptId(Long deptId) {
         // 查找当前部门id的所有子部门id集合
         List<SysDept> sysDepts = this.getAllDept(deptId);
         List<Long> deptIds = sysDepts.stream().map(SysDept::getDeptId).collect(Collectors.toList());
@@ -101,8 +101,14 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     }
 
     @Override
-    public List<SysDept> getAllDept(Integer deptId) {
-        return sysDeptMapper.selectAllDept(deptId);
+    public List<SysDept> getAllDept(Long deptId) {
+        List<SysDept> sysDepts = sysDeptMapper.selectAllDept(deptId);
+        if (sysDepts.isEmpty()) {
+            sysDepts = new ArrayList<>();
+        }
+        SysDept sysdept = this.getById(deptId);
+        sysDepts.add(sysdept);
+        return sysDepts;
     }
 
     @Override
@@ -140,6 +146,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     public void listWithAuthority() {
         Long userId = 100L;
     }
+
 
     public static List<TreeNode> buildTree(List<SysDept> depts) {
         List<TreeNode> nodes = depts.stream()

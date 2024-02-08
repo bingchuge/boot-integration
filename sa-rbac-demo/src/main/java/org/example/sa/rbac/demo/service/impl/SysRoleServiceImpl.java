@@ -6,6 +6,7 @@ import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.example.sa.rbac.demo.entity.SysDept;
 import org.example.sa.rbac.demo.entity.SysMenuCosas;
 import org.example.sa.rbac.demo.entity.SysRole;
 import org.example.sa.rbac.demo.entity.dto.AuthDeptDto;
@@ -20,8 +21,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -44,9 +47,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     private SysMenuCosasService sysMenuCosasService;
     @Autowired
     private SysDeptRoleService sysDeptRoleService;
+    @Autowired
+    private SysDeptService sysDeptService;
 
     @Override
-    public Set<Long> getRoleIdsByUserId(int userId) {
+    public Set<Long> getRoleIdsByUserId(Long userId) {
         return sysUserRoleService.getRoleIdsByUserId(userId);
     }
 
@@ -101,6 +106,19 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Override
     public void authDepts(AuthDeptDto authDeptDto) {
         sysDeptRoleService.authDepts(authDeptDto);
+    }
+
+    @Override
+    public Set<Long> getRoleIds(Long userId) {
+        SysDept dept = sysDeptService.getDeptByUserId(userId);
+        List<SysDept> allDept = sysDeptService.getAllDept(dept.getDeptId());
+        List<Long> depts = allDept.stream().map(SysDept::getDeptId).collect(Collectors.toList());
+        Set<Long> roleIdsByDept = sysDeptRoleService.getRoleIdsByDeptIds(depts);
+        // 个人角色
+        Set<Long> roleIdsByUser = sysUserRoleService.getRoleIdsByUserId(userId);
+        Set<Long> roleIds = new HashSet<>(roleIdsByDept);
+        roleIds.addAll(roleIdsByUser);
+        return roleIds;
     }
 
 }

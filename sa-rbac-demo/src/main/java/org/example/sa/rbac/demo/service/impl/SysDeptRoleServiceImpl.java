@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -53,6 +54,28 @@ public class SysDeptRoleServiceImpl extends ServiceImpl<SysDeptRoleMapper, SysDe
     public List<Long> getDepsIdsByRoleId(Long roleId) {
         List<SysDeptRole> sysDeptRoles = listByRoleId(roleId);
         return sysDeptRoles.stream().map(SysDeptRole::getDeptId).collect(Collectors.toList());
+    }
+
+    @Override
+    public Set<Long> getRoleIdsByDeptId(Long deptId) {
+        List<SysDeptRole> list = listSysDeptRoleByDeptId(deptId);
+        Set<Long> roleIds = list.stream().map(SysDeptRole::getRoleId).collect(Collectors.toSet());
+        return roleIds;
+    }
+
+    @Override
+    public Set<Long> getRoleIdsByDeptIds(List<Long> depts) {
+        LambdaQueryWrapper<SysDeptRole> wrapper = Wrappers.lambdaQuery();
+        wrapper.in(SysDeptRole::getDeptId, depts);
+        List<SysDeptRole> list = this.list(wrapper);
+        return list.stream().map(SysDeptRole::getRoleId).collect(Collectors.toSet());
+    }
+
+    private List<SysDeptRole> listSysDeptRoleByDeptId(Long deptId) {
+        LambdaQueryWrapper<SysDeptRole> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(SysDeptRole::getDeptId, deptId);
+        List<SysDeptRole> list = list(wrapper);
+        return list;
     }
 
     private List<SysDeptRole> listByRoleId(Long roleId) {

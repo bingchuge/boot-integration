@@ -30,7 +30,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     private SysMenuRoleService sysMenuRoleService;
 
     @Override
-    public Set<Long> getRoleIdsByUserId(int userId) {
+    public Set<Long> getRoleIdsByUserId(Long userId) {
         LambdaQueryWrapper<SysUserRole> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(SysUserRole::getUserId, userId);
         List<SysUserRole> list = this.list(wrapper);

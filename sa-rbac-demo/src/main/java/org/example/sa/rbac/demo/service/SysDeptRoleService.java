@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import org.example.sa.rbac.demo.entity.dto.AuthDeptDto;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -21,4 +22,8 @@ public interface SysDeptRoleService extends IService<SysDeptRole> {
     void removeByRoleId(Long RoleId);
 
     List<Long> getDepsIdsByRoleId(Long roleId);
+
+    Set<Long> getRoleIdsByDeptId(Long deptId);
+
+    Set<Long> getRoleIdsByDeptIds(List<Long> depts);
 }

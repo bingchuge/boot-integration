@@ -1,5 +1,6 @@
 package org.example.sa.rbac.demo.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import org.example.sa.rbac.demo.entity.SysMenu;
 import org.example.sa.rbac.demo.mappers.SysMenuMapper;
 import org.example.sa.rbac.demo.service.SysMenuRoleService;
@@ -9,6 +10,7 @@ import org.example.sa.rbac.demo.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -23,20 +25,7 @@ import java.util.Set;
 @Service
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements SysMenuService {
 
-    @Autowired
-    private SysMenuRoleService sysMenuRoleService;
-
-    @Autowired
-    private SysRoleService sysRoleService;;
 
 
-    @Override
-    public List<SysMenu> listByUserId(int userId) {
-        Set<Long> roleIds = sysRoleService.getRoleIdsByUserId(userId);
-        // 获取拥有菜单id
-        List<Long> menuIds = sysMenuRoleService.getMenuIdsByRoleIds(roleIds);
-        // 获取菜单集合
-        List<SysMenu> sysMenus = this.listByIds(menuIds);
-        return sysMenus;
-    }
+
 }

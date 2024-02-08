@@ -26,9 +26,9 @@ public interface SysDeptService extends IService<SysDept> {
 
     List<TreeNode> getDeptTree();
 
-    List<Long> getUserIdsByDeptId(Integer deptId);
+    List<Long> getUserIdsByDeptId(Long deptId);
 
-    List<SysDept> getAllDept(Integer deptId);
+    List<SysDept> getAllDept(Long deptId);
 
     void updateUserDept(String deptId, Long userId);
 

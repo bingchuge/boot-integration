@@ -4,6 +4,7 @@ import org.example.sa.rbac.demo.entity.SysMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -14,8 +15,6 @@ import java.util.List;
  * @since 2024-01-09
  */
 public interface SysMenuService extends IService<SysMenu> {
-
-    List<SysMenu> listByUserId(int userId);
 
 
 }

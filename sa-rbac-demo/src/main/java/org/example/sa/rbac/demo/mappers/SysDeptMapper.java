@@ -24,5 +24,5 @@ public interface SysDeptMapper extends BaseMapper<SysDept> {
     void deleteChildren(@Param("deptId") Long deptId);
 
 //    @Select("select * from sys_dept where find_in_set(ancestors, #{deptId}) or dept_id = #{deptId}")
-    List<SysDept> selectAllDept(@Param("deptId") Integer deptId);
+    List<SysDept> selectAllDept(@Param("deptId") Long deptId);
 }

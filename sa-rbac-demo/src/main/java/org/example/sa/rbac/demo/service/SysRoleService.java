@@ -21,7 +21,8 @@ import java.util.Set;
  */
 public interface SysRoleService extends IService<SysRole> {
 
-    Set<Long> getRoleIdsByUserId(int userId);
+
+    Set<Long> getRoleIdsByUserId(Long userId);
 
     void saveRoleMenu(SaveRoleMenuDto roleMenuDto);
 
@@ -34,4 +35,6 @@ public interface SysRoleService extends IService<SysRole> {
     void unAuthUsers(AuthUserDto authUserDto);
 
     void authDepts(AuthDeptDto authDeptDto);
+
+    Set<Long> getRoleIds(Long userId);
 }
